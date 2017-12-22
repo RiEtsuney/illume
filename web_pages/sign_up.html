@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <link  href="style.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <title>Startup Web App Display Demo</title>
+    <script src="http://localhost:9090/socket.io/socket.io.js"></script>  
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+</head>
+
+<body>
+<div class="container">
+	<div class="signup" align="center">
+	<div class="signuptitle" align="center">
+		Sign Up
+	</div>
+	<table cellpadding="2" cellspacing="5">
+		<tbody>
+			<tr>
+				<td class="tblitem">
+					Username:
+				</td>
+				<td>
+  					<input id="username" name="txtEmail" type="text" maxlength="100" tabindex="1">
+  				</td>
+			</tr>
+			<tr>
+				<td class="tblitem">
+					Password:
+				</td>
+				<td>
+  					<input id="password" name="txtPass" type="password" maxlength="50" tabindex="2">
+  				</td>
+			</tr>
+			<tr>
+				<td><span style="color: red;" id="error"></span></td>
+			</tr>
+		</tbody>
+	</table>
+	<button id="sign_up" type="button" class="btn">Sign Up</button>
+	<script>
+		document.getElementById("sign_up").onclick=function(){
+			var socket = io.connect('http://localhost:9090');  
+	        var username = document.getElementById("username").value; 
+	        var password = document.getElementById("password").value;
+	        
+	        socket.emit('sign_up', {Username: username, Password: password});
+	        socket.on('login_result', function(data){
+	        	if(data.result == 'pass'){
+	        		$("#error").html('account has already existed!');
+	        	}
+	        	else if(data.result == 'wrong'){
+	        		$("#error").html('account has already existed!');
+	        	}
+	        	else if(data.result == 'non-exist'){
+	        		socket.emit('sign_up_2', {Username: username, Password: password});
+	        		socket.on('sign_up_result', function(data){
+	    	        	if(data.result == 'success'){
+	    	        		window.location.href='./demo.html';
+	    	        	}
+	    	        });
+	        	}
+	        });
+	    };
+	</script>	
+	</div>
+</div>
+</body>
+</html>

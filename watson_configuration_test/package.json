@@ -1,0 +1,15 @@
+{
+  "name": "nodejs-console-app1",
+  "version": "0.0.0",
+  "description": "NodejsConsoleApp1",
+  "main": "app.js",
+  "author": {
+    "name": "Edwardu"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "watson-developer-cloud": "^2.4.5",
+    "xlsx": "^0.8.0",
+    "xlsx.js": "^2.3.1"
+  }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head lang="en">  
+	<link  href="style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">  
+    <title>Startup Web App Display Demo</title>  
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>  
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>   
+</head>  
+<body>
+    <div class="container">
+  	    <div class="title">
+            Startup Web App Demo
+        </div>
+   <div class="put">
+   	    <div class="inquiry">
+            Please input your patent keywords:<br />
+        </div>
+   <div class="kuangkuang">
+        <input id="data" type="text" name="patent" style="width:500px; height:20px;" />
+        <button id="submit" class="btn" type="button">Submit</button>
+        <script>
+		document.getElementById("submit").onclick=function(){
+			// creat websocket connection 
+			var socket = io.connect('http://localhost:3000');  
+	        // display on div  
+	        var query_data = document.getElementById("data").value; 
+	        socket.emit('query', {query: query_data});
+	        socket.on('result', function (data) {
+	                $("#result1").html(data.result[0]);
+	                $("#result2").html(data.result[1]);
+	                $("#result3").html(data.result[2]);
+	                $("#result4").html(data.result[3]);
+	                $("#result5").html(data.result[4]);
+	                $("#result6").html(data.result[5]);
+	                $("#result7").html(data.result[6]);
+	                $("#result8").html(data.result[7]);
+	                $("#result9").html(data.result[8]);
+	                $("#result10").html(data.result[9]);
+	                $("#grade").html(data.grade);
+	        	});  
+	    	};
+   		</script> 
+   </div> 
+   </div>
+   <div class="put">
+        <div class="patent">
+       	    Similar patents are as follow:
+       	    <br>
+       	    <table border="0">
+				<tr>
+					<td><span style="color: blue;" id="result1"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result2"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result3"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result4"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result5"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result6"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result7"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result8"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result9"></span></td>
+				</tr>
+				<tr>
+					<td><span style="color: blue;" id="result10"></span></td>
+				</tr>
+			</table>
+        </div>
+        <div class="score">
+        	the score of your idea is:
+        	<br>
+        	<span style="color: red;" id="grade"></span>
+        </div>
+   </div>
+</div>
+</body>
+</html>

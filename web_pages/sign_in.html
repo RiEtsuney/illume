@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <link  href="style.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <title>Startup Web App Display Demo</title>
+    <script src="http://localhost:8080/socket.io/socket.io.js"></script>  
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+</head>
+ 
+<body>
+  <div class="container">
+  	<div class="signin" align="center">
+  	<div class="signuptitle">
+  		Welcome to Illume!
+  	</div>
+  	<table cellpadding="2" cellspacing="5">
+  		<tbody>
+ 			<tr>
+  				<td class="tblitem">
+  					User Name:
+  				</td>  	
+  				<td>
+  					<input id="username" name="txtEmail" type="text" maxlength="100" tabindex="1">
+  				</td>		
+  			</tr>
+  			<tr>
+  				<td class="tblitem">
+  					Password:
+  				</td>  	
+  				<td>
+  					<input id="password" name="txtPass" type="password" maxlength="50" tabindex="2">
+  				</td>		
+  			</tr>
+  			<tr>
+  				<td><span style="color: red;" id="error"></span></td>
+  			</tr>
+		</tbody>
+  </table>
+  		<button id="sign_in" type="button" class="btn">Sign in</button>
+  		<script>
+  			document.getElementById("sign_in").onclick=function(){
+  				var socket = io.connect('http://localhost:8080');  
+  		        var username = document.getElementById("username").value; 
+  		        var password = document.getElementById("password").value;
+  		        
+  		        socket.emit('login', {Username: username, Password: password});
+  		        socket.on('login_result', function(data){
+  		        	if(data.result == 'non-exist'){
+  		        		$("#error").html('account does not exist!');
+  		        	}
+  		        	else if(data.result == 'wrong'){
+  		        		$("#error").html('wrong password!');
+  		        	}
+  		        	else if(data.result == 'pass'){
+  		        		window.location.href='./demo.html';
+  		        	}
+  		        });
+  			};
+		</script>
+</div>
+      <div class="signin" align="center">
+       <table cellpadding="2" cellspacing="5">
+       	<tbody>
+       		<tr>
+       			<td class="new">
+       				New To Illume?
+       			</td>
+       			<td>
+       				<button type="button" class="btn" ><a href="./sign_up.html" class="btn" >Sign Up Now!</a></button>
+       			</td>
+       		</tr>
+       	</tbody>
+       </table>      	
+      </div> 
+        
+  </div>
+</body>
+</html>
